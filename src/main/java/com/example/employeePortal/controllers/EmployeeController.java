@@ -2,7 +2,7 @@ package com.example.employeePortal.controllers;
 
 
 import com.example.employeePortal.entities.Employee;
-import com.example.employeePortal.repositories.EmployeeInMemoryRepository;
+import com.example.employeePortal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,30 +12,32 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/employees")
 public class EmployeeController {
-    private final EmployeeInMemoryRepository employeeInMemoryRepository;
+    private final EmployeeService employeeService;
 
     @GetMapping(value = "")
     public List<Employee> getAllEmployees() {
-        return employeeInMemoryRepository.getAllEmployees();
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping(value = "/{id}")
     public Employee getEmployeeById(@PathVariable(name = "id") Long id) {
-        return employeeInMemoryRepository.getEmployeeById(id);
+        return employeeService.getEmployeeById(id);
     }
 
     @PostMapping("")
     public Employee addEmployee(@RequestBody Employee employee) {
-       return employeeInMemoryRepository.addEmployee(employee);
+        employeeService.addEmployee(employee);
+        return employee;
     }
 
     @PutMapping("/{id}")
     public Employee updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
-        return employeeInMemoryRepository.updateEmployee(id,employee);
+        employeeService.updateEmployee(id, employee);
+        return employee;
     }
 
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable(name = "id") Long id) {
-       employeeInMemoryRepository.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
     }
 }
