@@ -43,6 +43,5 @@ public class Employee {
 
     @Column(name = "bio")
     private String bio;
-//    private EmployeeAddress presentAddress;
-//    private EmployeeAddress permanentAddress;
+
 }

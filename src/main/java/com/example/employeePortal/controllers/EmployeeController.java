@@ -4,6 +4,8 @@ package com.example.employeePortal.controllers;
 import com.example.employeePortal.entities.Employee;
 import com.example.employeePortal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,20 +22,22 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/{id}")
-    public Employee getEmployeeById(@PathVariable(name = "id") Long id) {
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "id") Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        if (employee != null)
+            return ResponseEntity.ok(employee);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("")
-    public Employee addEmployee(@RequestBody Employee employee) {
-        employeeService.addEmployee(employee);
-        return employee;
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+        final Employee newEmployee = employeeService.addEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
     }
 
     @PutMapping("/{id}")
     public Employee updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
-        employeeService.updateEmployee(id, employee);
-        return employee;
+        return employeeService.updateEmployee(id, employee);
     }
 
     @DeleteMapping("/{id}")
