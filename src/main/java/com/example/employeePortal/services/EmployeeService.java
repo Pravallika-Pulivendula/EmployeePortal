@@ -14,7 +14,7 @@ public class EmployeeService {
     public EmployeeRepository employeeRepository;
 
     public List<Employee> getAllEmployees() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "doj", "firstName");
+        Sort sort = Sort.by(Sort.Direction.ASC, "doj", "firstName","lastName");
         return employeeRepository.findAll(sort);
     }
 
