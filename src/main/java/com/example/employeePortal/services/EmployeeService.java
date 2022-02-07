@@ -10,8 +10,8 @@ public class EmployeeService {
     @Autowired
     public EmployeeRepository employeeRepository;
 
-    public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public Employee getEmployeeById(Long empId) {
+        return employeeRepository.findById(empId).orElse(null);
     }
 
 }
