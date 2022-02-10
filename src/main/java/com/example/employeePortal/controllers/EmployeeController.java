@@ -4,10 +4,7 @@ package com.example.employeePortal.controllers;
 import com.example.employeePortal.entities.Employee;
 import com.example.employeePortal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,8 +14,8 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    @GetMapping(value = "/{firstName}/{lastName}")
-    public List<Employee> findByName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
+    @GetMapping(value = "/by-name")
+    public List<Employee> findByName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         return employeeService.findByName(firstName, lastName);
     }
 }
