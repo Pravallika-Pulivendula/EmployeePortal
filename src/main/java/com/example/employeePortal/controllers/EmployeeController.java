@@ -20,8 +20,9 @@ public class EmployeeController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "id") Long id) {
         Employee employee = employeeService.getEmployeeById(id);
-        if (employee != null)
+        if (employee != null) {
             return ResponseEntity.ok(employee);
+        }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
