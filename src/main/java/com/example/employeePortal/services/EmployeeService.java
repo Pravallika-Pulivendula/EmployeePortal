@@ -15,10 +15,15 @@ import java.util.List;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public List<Employee> getAllEmployees() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "doj", "firstName", "lastName");
+    public List<Employee> getAllEmployees(Sort sort) {
         return employeeRepository.findAll(sort);
     }
 
+    public Sort.Direction getSortDirection(String direction) {
+        if (direction.equals("desc")) {
+            return Sort.Direction.DESC;
+        }
+        return Sort.Direction.ASC;
+    }
 }
 
