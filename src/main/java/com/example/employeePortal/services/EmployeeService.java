@@ -15,17 +15,24 @@ import java.util.List;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public Employee addEmployee(Employee employee) {
-        employeeRepository.save(employee);
-        return employee;
+    public List<Employee> getAllEmployees(Sort sort) {
+        return employeeRepository.findAll(sort);
     }
 
     public Employee getEmployeeById(Long empId) {
         return employeeRepository.findById(empId).orElse(null);
     }
 
-    public List<Employee> getAllEmployees(Sort sort) {
-        return employeeRepository.findAll(sort);
+    public Employee addEmployee(Employee employee) {
+        employeeRepository.save(employee);
+        return employee;
+    }
+
+    public Employee updateEmployee(Long id, Employee oldEmployee) {
+        Employee employee = employeeRepository.findById(oldEmployee.getEmpId()).orElse(oldEmployee);
+        employee.setEmpId(id);
+        employeeRepository.save(employee);
+        return employee;
     }
 
     public Sort.Direction getSortDirection(String direction) {

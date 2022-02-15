@@ -20,10 +20,13 @@ import java.util.stream.Collectors;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    @PostMapping("")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
-        final Employee newEmployee = employeeService.addEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
+    @GetMapping(value = "")
+    public List<Employee> getAllEmployees(@RequestParam(value = "sort") String[] sortBy) {
+        List<Order> orders = Arrays.stream(sortBy)
+                .map(sortParams -> sortParams.split(","))
+                .map(sorts -> new Order(employeeService.getSortDirection(sorts[1]), sorts[0]))
+                .collect(Collectors.toList());
+        return employeeService.getAllEmployees(Sort.by(orders));
     }
 
     @GetMapping(value = "/{id}")
@@ -35,13 +38,16 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping(value = "")
-    public List<Employee> getAllEmployees(@RequestParam(value = "sort") String[] sortBy) {
-        List<Order> orders = Arrays.stream(sortBy)
-                .map(sortParams -> sortParams.split(","))
-                .map(sorts -> new Order(employeeService.getSortDirection(sorts[1]), sorts[0]))
-                .collect(Collectors.toList());
-        return employeeService.getAllEmployees(Sort.by(orders));
+    @PostMapping("")
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+        final Employee newEmployee = employeeService.addEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
+        Employee newEmployee = employeeService.updateEmployee(id, employee);
+        return ResponseEntity.ok(newEmployee);
     }
 
 }
