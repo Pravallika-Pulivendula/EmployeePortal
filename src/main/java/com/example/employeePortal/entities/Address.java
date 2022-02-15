@@ -3,7 +3,7 @@ package com.example.employeePortal.entities;
 import lombok.Data;
 
 @Data
-public class EmployeeAddress {
+public class Address {
     private String addressLine1;
     private String addressLine2;
     private String city;
