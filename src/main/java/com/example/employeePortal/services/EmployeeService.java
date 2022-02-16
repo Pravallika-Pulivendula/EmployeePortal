@@ -8,15 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public List<Employee> findByName(String searchName, Pageable pageable) {
+    public Page<Employee> findByName(String searchName, Pageable pageable) {
         return employeeRepository.findByFirstNameContainingOrLastNameContaining(searchName, searchName,pageable);
     }
 }
