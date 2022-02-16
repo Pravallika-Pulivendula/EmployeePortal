@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/employees")
@@ -19,8 +22,17 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping(value = "/search")
-    public Page<Employee> findByName(@RequestParam("query") String searchKeyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+    public Map<String, Object> findByName(@RequestParam("query") String searchKeyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        return employeeService.findByName(searchKeyword, pageable);
+        Page<Employee> employeePage = employeeService.findByName(searchKeyword, pageable);
+        Map<String, Object> employeeResponse = new HashMap<>();
+        employeeResponse.put("data",employeePage.getContent());
+        employeeResponse.put("totalElements",employeePage.getTotalElements());
+        employeeResponse.put("totalPages",employeePage.getTotalPages());
+        employeeResponse.put("pageSize",employeePage.getSize());
+        employeeResponse.put("currentPage",employeePage.getNumber());
+        employeeResponse.put("hasNext",employeePage.hasNext());
+        employeeResponse.put("hasPrevious",employeePage.hasPrevious());
+        return employeeResponse;
     }
 }
