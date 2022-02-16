@@ -15,7 +15,7 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public List<Employee> findByName(String searchName) {
-        return employeeRepository.findByFirstNameOrLastNameLike(searchName,searchName);
+        return employeeRepository.findByFirstNameContainingOrLastNameContaining(searchName,searchName);
     }
 }
 
