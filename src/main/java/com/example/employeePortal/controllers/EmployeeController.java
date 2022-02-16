@@ -15,11 +15,11 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    @GetMapping(value = "/by-name")
-    public List<Employee> findByName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        List<Employee> employeesList = employeeService.findByName(firstName, lastName);
+    @GetMapping(value = "/search")
+    public List<Employee> findByName(@RequestParam("query") String searchKeyword) {
+        List<Employee> employeesList = employeeService.findByName(searchKeyword);
         if(employeesList.isEmpty()){
-            throw new EmployeeNotFoundException("No employee found with the name: "+firstName+lastName);
+            throw new EmployeeNotFoundException("No employee found with the name like: "+searchKeyword);
         }
         return employeesList;
     }

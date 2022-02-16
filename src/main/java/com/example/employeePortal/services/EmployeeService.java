@@ -14,8 +14,8 @@ import java.util.List;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public List<Employee> findByName(String firstName, String lastName) {
-        return employeeRepository.findByFirstNameAndLastName(firstName, lastName);
+    public List<Employee> findByName(String searchName) {
+        return employeeRepository.findByFirstNameOrLastNameLike(searchName,searchName);
     }
 }
 
