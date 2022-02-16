@@ -21,7 +21,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping(value = "")
-    public Slice<Employee> getAllEmployees(@RequestParam(value = "sort") String[] sortBy, @RequestParam(value = "page") int page, @RequestParam(value = "size") int pageSize) {
+    public Slice<Employee> getAllEmployees(@RequestParam(value = "sort") String[] sortBy, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
         List<Order> orders = Arrays.stream(sortBy)
                 .map(sortParams -> sortParams.split(","))
                 .map(sorts -> new Order(employeeService.getSortDirection(sorts[1]), sorts[0]))
