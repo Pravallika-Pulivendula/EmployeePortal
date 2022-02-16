@@ -44,4 +44,12 @@ public class Employee {
     @Column(name = "bio")
     private String bio;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "present_address_id")
+    private Address presentAddress;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "permanent_address_id")
+    private Address permanentAddress;
+
 }
