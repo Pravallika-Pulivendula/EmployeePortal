@@ -4,6 +4,8 @@ package com.example.employeePortal.controllers;
 import com.example.employeePortal.entities.Employee;
 import com.example.employeePortal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/search")
     public List<Employee> findByName(@RequestParam("query") String searchKeyword) {
-        return employeeService.findByName(searchKeyword);
+        Pageable pageable = PageRequest.of(1,2);
+        return employeeService.findByName(searchKeyword,pageable);
     }
 }
