@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Table(name = "employees")
 public class Employee {
     @Id
-    @Column(name = "empid")
+    @Column(name = "emp_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long empId;
 
@@ -20,13 +20,13 @@ public class Employee {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "everestemailid")
+    @Column(name = "everest_email_id")
     private String everestEmailId;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "personalemailid")
+    @Column(name = "personal_email_id")
     private String personalEmailId;
 
     @Column(name = "dob")
@@ -38,10 +38,18 @@ public class Employee {
     @Column(name = "designation")
     private String designation;
 
-    @Column(name = "experienceinyears")
+    @Column(name = "experience_in_years")
     private int experienceInYears;
 
     @Column(name = "bio")
     private String bio;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "present_address_id")
+    private Address presentAddress;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "permanent_address_id")
+    private Address permanentAddress;
 
 }
