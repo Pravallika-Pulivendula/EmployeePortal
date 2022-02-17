@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,13 +23,18 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping(value = "")
-    public Slice<Employee> getAllEmployees(@RequestParam(value = "sort") String[] sortBy, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
-        List<Order> orders = Arrays.stream(sortBy)
-                .map(sortParams -> sortParams.split(","))
-                .map(sorts -> new Order(employeeService.getSortDirection(sorts[1]), sorts[0]))
-                .collect(Collectors.toList());
-        Pageable pageable = PageRequest.of(page,pageSize,Sort.by(orders));
-        return employeeService.getAllEmployees(pageable);
+    public Map<String,Object> getAllEmployees(@RequestParam(value = "sort", defaultValue = "empId,asc") String[] sortBy, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+        List<Order> orders = new ArrayList<>();
+        if (sortBy[0].contains(",")) {
+            orders = Arrays.stream(sortBy)
+                    .map(sortParams -> sortParams.split(","))
+                    .map(sorts -> new Order(employeeService.getSortDirection(sorts[1]), sorts[0]))
+                    .collect(Collectors.toList());
+        } else {
+            orders.add(new Order(employeeService.getSortDirection(sortBy[1]), sortBy[0]));
+        }
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(orders));
+        return employeeService.getEmployeeResponse(employeeService.getAllEmployees(pageable));
     }
 
     @GetMapping(value = "/{id}")
