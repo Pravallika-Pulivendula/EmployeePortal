@@ -21,7 +21,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping(value = "/search")
-    public Map<String, Object> findByName(@RequestParam("query") String searchKeyword, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+    public Map<String, Object> findByName(@RequestParam("query") String searchKeyword, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Employee> employeePage = employeeService.findByName(searchKeyword, pageable);
         return employeeService.getEmployeeResponse(employeePage);
