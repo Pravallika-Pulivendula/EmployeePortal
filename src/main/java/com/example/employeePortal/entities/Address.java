@@ -24,8 +24,7 @@ public class Address {
 
     @NotBlank
     private String state;
-
-    @NotBlank
+    
     private long zipcode;
 
     @NotBlank

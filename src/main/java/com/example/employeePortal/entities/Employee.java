@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -38,11 +39,9 @@ public class Employee {
     @Column(name = "personal_email_id")
     private String personalEmailId;
 
-    @NotBlank
     @Column(name = "dob")
     private LocalDate dob;
 
-    @NotBlank
     @Column(name = "doj")
     private LocalDate doj;
 
@@ -50,7 +49,6 @@ public class Employee {
     @Column(name = "designation")
     private String designation;
 
-    @NotBlank
     @Column(name = "experience_in_years")
     private int experienceInYears;
 
