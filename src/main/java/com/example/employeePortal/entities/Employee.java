@@ -3,6 +3,8 @@ package com.example.employeePortal.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -14,18 +16,25 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long empId;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank
+    @Email
     @Column(name = "everest_email_id")
     private String everestEmailId;
 
+    @NotBlank
     @Column(name = "password")
     private String password;
 
+    @NotBlank
+    @Email
     @Column(name = "personal_email_id")
     private String personalEmailId;
 
@@ -35,12 +44,14 @@ public class Employee {
     @Column(name = "doj")
     private LocalDate doj;
 
+    @NotBlank
     @Column(name = "designation")
     private String designation;
 
     @Column(name = "experience_in_years")
     private int experienceInYears;
-    
+
+    @NotBlank
     @Column(name = "bio")
     private String bio;
 
