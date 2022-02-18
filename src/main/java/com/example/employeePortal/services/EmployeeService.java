@@ -41,5 +41,10 @@ public class EmployeeService {
         }
         return Sort.Direction.ASC;
     }
+
+    public Page<Employee> findByName(String searchName, Pageable pageable) {
+        return employeeRepository.findByFirstNameContainingOrLastNameContaining(searchName, searchName, pageable);
+    }
+
 }
 

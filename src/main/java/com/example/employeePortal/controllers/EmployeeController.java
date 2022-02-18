@@ -5,6 +5,7 @@ import com.example.employeePortal.entities.Employee;
 import com.example.employeePortal.models.EmployeeResponse;
 import com.example.employeePortal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -59,6 +60,13 @@ public class EmployeeController {
     public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
         Employee newEmployee = employeeService.updateEmployee(id, employee);
         return ResponseEntity.ok(newEmployee);
+    }
+
+    @GetMapping(value = "/search")
+    public EmployeeResponse findByName(@RequestParam("query") String searchKeyword, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<Employee> employeePage = employeeService.findByName(searchKeyword, pageable);
+        return new EmployeeResponse(employeePage);
     }
 
 }
