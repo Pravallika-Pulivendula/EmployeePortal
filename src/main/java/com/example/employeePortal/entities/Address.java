@@ -16,7 +16,6 @@ public class Address {
     @NotBlank
     private String addressLine1;
 
-    @NotBlank
     private String addressLine2;
 
     @NotBlank
