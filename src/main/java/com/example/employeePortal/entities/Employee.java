@@ -1,12 +1,14 @@
 package com.example.employeePortal.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "employees")
 public class Employee {
     @Id
