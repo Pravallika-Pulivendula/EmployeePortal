@@ -1,11 +1,13 @@
 package com.example.employeePortal.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -24,7 +26,7 @@ public class Address {
 
     @NotBlank
     private String state;
-    
+
     private long zipcode;
 
     @NotBlank
