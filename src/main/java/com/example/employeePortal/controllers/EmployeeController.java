@@ -69,4 +69,8 @@ public class EmployeeController {
         return new EmployeeResponse(employeePage);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable(name = "id") long id) {
+        employeeService.deleteEmployee(id);
+    }
 }

@@ -46,5 +46,8 @@ public class EmployeeService {
         return employeeRepository.findByFirstNameContainingOrLastNameContaining(searchName, searchName, pageable);
     }
 
+    public void deleteEmployee(long id) {
+        employeeRepository.deleteById(id);
+    }
 }
 

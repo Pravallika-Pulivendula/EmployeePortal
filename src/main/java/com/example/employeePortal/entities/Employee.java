@@ -64,5 +64,4 @@ public class Employee {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "permanent_address_id")
     private Address permanentAddress;
-
 }
