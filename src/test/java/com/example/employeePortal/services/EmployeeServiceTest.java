@@ -19,13 +19,13 @@ class EmployeeServiceTest {
     private EmployeeRepository employeeRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         employeeRepository = mock(EmployeeRepository.class);
         employeeService = new EmployeeService(employeeRepository);
     }
 
     @Test
-    void shouldSaveEmployeeSuccessfully(){
+    void shouldSaveEmployeeSuccessfully() {
         Employee newEmployee = new Employee();
         newEmployee.setEverestEmailId("pravallikareddy@gmail.com");
         given(employeeRepository.findByEverestEmailId(newEmployee.getEverestEmailId())).willReturn(Optional.empty());
@@ -36,12 +36,11 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void shouldThrowAnExceptionWhenEmployeeWithEmailAlreadyExists(){
+    void shouldThrowAnExceptionWhenEmployeeWithEmailAlreadyExists() {
         Employee newEmployee = new Employee();
         newEmployee.setEverestEmailId("pravallikareddy@gmail.com");
         given(employeeRepository.findByEverestEmailId(newEmployee.getEverestEmailId())).willReturn(Optional.of(newEmployee));
         assertThrows(EmployeeExistsException.class, () -> employeeService.addEmployee(newEmployee));
-        verify(employeeRepository,never()).save(any(Employee.class));
+        verify(employeeRepository, never()).save(any(Employee.class));
     }
-
 }
