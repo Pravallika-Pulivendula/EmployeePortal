@@ -1,6 +1,8 @@
 package com.example.employeePortal.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +14,8 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Table(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
     @Id
     @Column(name = "emp_id")
