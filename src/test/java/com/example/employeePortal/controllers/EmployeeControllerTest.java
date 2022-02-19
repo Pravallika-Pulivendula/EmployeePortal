@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +34,8 @@ class EmployeeControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/{id}", employee.getEmpId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName",equalTo(employee.getFirstName())));
+
+        verify(employeeService).getEmployeeById(anyLong());
     }
 
     @Test
@@ -39,5 +43,7 @@ class EmployeeControllerTest {
         long empId = 2;
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/{id}", empId))
                 .andExpect(status().isNotFound());
+
+        verify(employeeService).getEmployeeById(anyLong());
     }
 }
