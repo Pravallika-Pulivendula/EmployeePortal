@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -50,7 +51,10 @@ class EmployeeControllerTest {
         when(employeeService.getAllEmployees(any(Pageable.class))).thenReturn(employeePage);
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.size()", is(this.employeeList.size())));
+                .andExpect(jsonPath("$.data.size()", is(this.employeeList.size())))
+                .andExpect(jsonPath("$.currentPage", equalTo(0)))
+                .andExpect(jsonPath("$.hasNext", equalTo(false)))
+                .andExpect(jsonPath("$.totalPages", equalTo(1)));
 
         verify(employeeService).getAllEmployees(any(Pageable.class));
     }
