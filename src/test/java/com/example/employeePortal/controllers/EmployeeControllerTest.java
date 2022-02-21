@@ -23,6 +23,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -83,4 +84,25 @@ class EmployeeControllerTest {
         verify(employeeService).getAllEmployees(any(Pageable.class));
     }
 
+    @Test
+    void shouldFetchEmployeeById() throws Exception {
+        Employee employee = new Employee();
+        employee.setEmpId(1);
+        employee.setFirstName("pravallika");
+        when(employeeService.getEmployeeById(employee.getEmpId())).thenReturn(employee);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/{id}", employee.getEmpId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo(employee.getFirstName())));
+
+        verify(employeeService).getEmployeeById(anyLong());
+    }
+
+    @Test
+    void shouldReturn404ErrorWhenNoEmployeeWithGivenIdIsFound() throws Exception {
+        long empId = 2;
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/{id}", empId))
+                .andExpect(status().isNotFound());
+
+        verify(employeeService).getEmployeeById(anyLong());
+    }
 }
