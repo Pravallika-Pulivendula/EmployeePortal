@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -42,5 +42,16 @@ class EmployeeServiceTest {
         given(employeeRepository.findByEverestEmailId(newEmployee.getEverestEmailId())).willReturn(Optional.of(newEmployee));
         assertThrows(EmployeeExistsException.class, () -> employeeService.addEmployee(newEmployee));
         verify(employeeRepository, never()).save(any(Employee.class));
+
+    }
+
+    @Test
+    void shouldReturnDescDirection() {
+        assertTrue(employeeService.getSortDirection("desc").isDescending());
+    }
+
+    @Test
+    void shouldNotReturnDescDirection() {
+        assertFalse(employeeService.getSortDirection("desc").isAscending());
     }
 }

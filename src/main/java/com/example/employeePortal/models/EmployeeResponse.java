@@ -22,7 +22,7 @@ public class EmployeeResponse {
         this.setTotalElements(employeePage.getTotalElements());
         this.setTotalPages(employeePage.getTotalPages());
         this.setPageSize(employeePage.getSize());
-        this.setCurrentPage(employeePage.getNumber()+1);
+        this.setCurrentPage(employeePage.getNumber() + 1);
         this.setHasNext(employeePage.hasNext());
         this.setHasPrevious(employeePage.hasPrevious());
     }
