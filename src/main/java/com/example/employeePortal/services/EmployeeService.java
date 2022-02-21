@@ -1,6 +1,7 @@
 package com.example.employeePortal.services;
 
 import com.example.employeePortal.entities.Employee;
+import com.example.employeePortal.exceptions.EmployeeExistsException;
 import com.example.employeePortal.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -24,8 +27,11 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee employee) {
-        employeeRepository.save(employee);
-        return employee;
+        Optional<Employee> optionalEmployee = employeeRepository.findByEverestEmailId(employee.getEverestEmailId());
+        if (optionalEmployee.isPresent()) {
+            throw new EmployeeExistsException("Employee with email " + employee.getEverestEmailId() + " already exists");
+        }
+        return employeeRepository.save(employee);
     }
 
     public Employee updateEmployee(Long id, Employee oldEmployee) {
@@ -49,5 +55,6 @@ public class EmployeeService {
     public void deleteEmployee(long id) {
         employeeRepository.deleteById(id);
     }
+
 }
 
