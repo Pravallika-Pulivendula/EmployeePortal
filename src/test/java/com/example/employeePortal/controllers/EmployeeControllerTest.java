@@ -22,8 +22,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -104,5 +103,46 @@ class EmployeeControllerTest {
                 .andExpect(status().isNotFound());
 
         verify(employeeService).getEmployeeById(anyLong());
+    }
+
+    @Test
+    void shouldReturnEmployeesWhoseFirstNameMatchesPrav() throws Exception {
+        String keyword = "prav";
+        Page<Employee> employeePage = new PageImpl<>(this.employeeList);
+        when(employeeService.findByName(eq(keyword), any(Pageable.class))).thenReturn(employeePage);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/search")
+                        .param("query", keyword))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.size()", equalTo(2)));
+    }
+
+    @Test
+    void shouldReturnEmployeesWhoseLastNameMatchesRed() throws Exception {
+        String keyword = "red";
+        Employee employee = new Employee();
+        employee.setLastName("reddy");
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee);
+        Page<Employee> employeePage = new PageImpl<>(employeeList);
+        when(employeeService.findByName(eq(keyword), any(Pageable.class))).thenReturn(employeePage);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/search")
+                        .param("query", keyword))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.size()", equalTo(1)));
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenKeywordDoesntMatch() throws Exception {
+        String keyword = "empty";
+        List<Employee> employeeList = new ArrayList<>();
+        Page<Employee> employeePage = new PageImpl<>(employeeList);
+        when(employeeService.findByName(eq(keyword), any(Pageable.class))).thenReturn(employeePage);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/search")
+                        .param("query", keyword))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.size()", equalTo(0)));
     }
 }
