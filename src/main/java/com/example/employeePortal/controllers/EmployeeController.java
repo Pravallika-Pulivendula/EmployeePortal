@@ -57,8 +57,11 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
-        Employee newEmployee = employeeService.updateEmployee(id, employee);
-        return ResponseEntity.ok(newEmployee);
+        Employee oldEmployee = employeeService.getEmployeeById(id);
+        if (oldEmployee != null) {
+            return ResponseEntity.ok(employeeService.updateEmployee(id,employee));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping(value = "/search")

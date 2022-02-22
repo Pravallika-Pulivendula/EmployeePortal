@@ -34,11 +34,12 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Long id, Employee oldEmployee) {
-        Employee employee = employeeRepository.findById(oldEmployee.getEmpId()).orElse(oldEmployee);
-        employee.setEmpId(id);
-        employeeRepository.save(employee);
-        return employee;
+    public Employee updateEmployee(Long id, Employee employee) {
+        Employee oldEmployee = employeeRepository.findById(id).orElseThrow();
+        employee.setEmpId(oldEmployee.getEmpId());
+        employee.getPresentAddress().setAddressId(oldEmployee.getPresentAddress().getAddressId());
+        employee.getPermanentAddress().setAddressId(oldEmployee.getPermanentAddress().getAddressId());
+        return employeeRepository.save(employee);
     }
 
     public Sort.Direction getSortDirection(String direction) {
