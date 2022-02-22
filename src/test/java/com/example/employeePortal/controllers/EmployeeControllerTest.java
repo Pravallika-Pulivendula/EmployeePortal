@@ -25,8 +25,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -104,5 +103,25 @@ class EmployeeControllerTest {
                 .andExpect(status().isNotFound());
 
         verify(employeeService).getEmployeeById(anyLong());
+    }
+
+    @Test
+    void shouldDeleteEmployee() throws Exception {
+        Employee employee = this.employeeList.get(0);
+        when(employeeService.getEmployeeById(employee.getEmpId())).thenReturn((employee));
+        doNothing().when(employeeService).deleteEmployee(employee.getEmpId());
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/employees/{id}", employee.getEmpId()))
+                .andExpect(status().isOk());
+
+        verify(employeeService).deleteEmployee(anyLong());
+    }
+
+    @Test
+    void shouldReturn404ErrorWhenDeletingNonExistingEmployee() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/employees/{id}", 3))
+                .andExpect(status().isNotFound());
+
+        verify(employeeService, never()).deleteEmployee(anyLong());
     }
 }
