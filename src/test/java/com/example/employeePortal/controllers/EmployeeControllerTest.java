@@ -22,11 +22,9 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -104,5 +102,34 @@ class EmployeeControllerTest {
                 .andExpect(status().isNotFound());
 
         verify(employeeService).getEmployeeById(anyLong());
+    }
+
+    @Test
+    void shouldUpdateUser() throws Exception {
+        Employee employee = this.employeeList.get(0);
+        given(employeeService.getEmployeeById(employee.getEmpId())).willReturn(employee);
+        given(employeeService.updateEmployee(eq(employee.getEmpId()), any(Employee.class))).willReturn(employee);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/employees/{id}", employee.getEmpId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(employee)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", is(employee.getFirstName())))
+                .andExpect(jsonPath("$.presentAddress.addressLine1", is(employee.getPresentAddress().getAddressLine1())));
+
+        verify(employeeService).updateEmployee(anyLong(), any(Employee.class));
+    }
+
+    @Test
+    void shouldReturn404ErrorWhenUpdatingNonExistingEmployee() throws Exception {
+        long empId = 2;
+        Employee employee = new Employee();
+
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/api/employees/{id}", empId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(employee)))
+                .andExpect(status().isNotFound());
+
+        verify(employeeService, never()).updateEmployee(anyLong(), any(Employee.class));
     }
 }
