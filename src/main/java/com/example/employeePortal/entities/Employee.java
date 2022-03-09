@@ -43,21 +43,19 @@ public class Employee {
     @Column(name = "personal_email_id")
     private String personalEmailId;
 
-    @Column(name = "dob", nullable = false)
+    @Column(name = "dob")
     private LocalDate dob;
 
-    @Column(name = "doj", nullable = false)
+    @Column(name = "doj")
     private LocalDate doj;
 
-    @NotBlank(message = "Designation should be blank")
-    @Column(name = "designation", nullable = false)
+    @Column(name = "designation")
     private String designation;
 
     @Min(value = 0, message = "Should be great than 0")
-    @Column(name = "experience_in_years", nullable = false)
+    @Column(name = "experience_in_years")
     private int experienceInYears;
 
-    @NotBlank
     @Column(name = "bio")
     private String bio;
 
