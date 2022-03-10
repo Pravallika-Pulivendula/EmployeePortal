@@ -16,7 +16,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:3000/")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
