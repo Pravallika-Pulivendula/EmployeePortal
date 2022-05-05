@@ -92,7 +92,7 @@ class EmployeeControllerTest {
         when(employeeService.getEmployeeById(employee.getEmpId())).thenReturn(employee);
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employees/{id}", employee.getEmpId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName", equalTo(employee.getFirstName())));
+                .andExpect(jsonPath("$.firstName", equalTo(employee.getLastName())));
 
         verify(employeeService).getEmployeeById(anyLong());
     }
