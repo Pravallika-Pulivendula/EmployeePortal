@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: backend.dockerfile
     ports:
-      - "8080:8080"
+      - "8084:8080"
     restart: always
     depends_on:
       - db
@@ -20,18 +20,17 @@ services:
 
   app-client:
     build:
-      context: employee-portal-react
+      context: src/main/java/com/example/employeePortal/employee-portal-react
       dockerfile: frontend.dockerfile
       args:
         REACT_APP_API_BASE_URL: http://127.0.0.1:8080/api/employees
     ports:
-      - "9090:80"
+      - "9090:3000"
     restart: always
     depends_on:
       - app-server
     networks:
       - frontend
-
 
   db:
     image: postgres
