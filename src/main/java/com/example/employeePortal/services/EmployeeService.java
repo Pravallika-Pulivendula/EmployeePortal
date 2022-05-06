@@ -37,8 +37,6 @@ public class EmployeeService {
     public Employee updateEmployee(Long id, Employee employee) {
         Employee oldEmployee = employeeRepository.findById(id).orElseThrow();
         employee.setEmpId(oldEmployee.getEmpId());
-        employee.getPresentAddress().setAddressId(oldEmployee.getPresentAddress().getAddressId());
-        employee.getPermanentAddress().setAddressId(oldEmployee.getPermanentAddress().getAddressId());
         return employeeRepository.save(employee);
     }
 
