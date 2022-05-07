@@ -39,5 +39,6 @@ jobs:
         application_name: springboot-react
         environment_name: Springbootreact-env
         version_label: "Sample Application"
+        use_existing_version_if_available: true
         region: us-east-1
         deployment_package: deploy.zip
