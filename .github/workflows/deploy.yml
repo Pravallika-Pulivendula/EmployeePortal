@@ -38,6 +38,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: springboot-react
         environment_name: Springbootreact-env
-        version_label: "springboot-react-${{ steps.format-time.outputs.replaced }}"
+        version_label: "Sample Application"
         region: us-east-1
         deployment_package: deploy.zip
