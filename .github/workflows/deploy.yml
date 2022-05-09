@@ -32,4 +32,4 @@ jobs:
           --version-label "Sample Application" \
 
       - name: Deploy new ElasticBeanstalk Application Version
-        run: aws elasticbeanstalk update-environment --environment-name Springapp-env-1 --version-label "ver-${{ github.sha }}"
+        run: aws elasticbeanstalk update-environment --environment-name Springapp-env-1 --version-label "Sample Application"
