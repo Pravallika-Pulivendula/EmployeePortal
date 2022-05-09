@@ -27,9 +27,9 @@ jobs:
       - name: Create new ElasticBeanstalk Application Version
         run: |
           aws elasticbeanstalk create-application-version \
-          --application-name SpringApp \
+          --application-name SpringBootApp \
           --source-bundle S3Bucket="spring-app-code",S3Key="deploy.zip" \
-          --version-label "Sample Application" \
+          --version-label "ver-${{ github.sha }}" \
 
       - name: Deploy new ElasticBeanstalk Application Version
-        run: aws elasticbeanstalk update-environment --environment-name Springapp-env-1 --version-label "Sample Application"
+        run: aws elasticbeanstalk update-environment --environment-name Springbootapp-env --version-label "ver-${{ github.sha }}"
