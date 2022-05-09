@@ -30,7 +30,6 @@ jobs:
           --application-name SpringApp \
           --source-bundle S3Bucket="spring-app-code",S3Key="deploy.zip" \
           --version-label "ver-${{ github.sha }}" \
-          --description "commit-sha-${{ github.sha }}"
 
       - name: Deploy new ElasticBeanstalk Application Version
         run: aws elasticbeanstalk update-environment --environment-name Springapp-env --version-label "ver-${{ github.sha }}"
