@@ -98,7 +98,7 @@ const AddEmployee = () => {
           <div className="form-group col-md-10 mt-2">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-success"
               onClick={(e) => saveEmployee(e)}
             >
               Save
