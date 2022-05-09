@@ -80,7 +80,7 @@ const EmployeeList = () => {
               <td>{employee.everestEmailId}</td>
               <td>
                 <button
-                  className={"btn btn-danger"}
+                  className={"btn btn-warning"}
                   onClick={() => deleteEmployee(employee.empId)}
                 >
                   Delete
