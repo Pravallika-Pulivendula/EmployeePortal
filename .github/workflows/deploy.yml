@@ -24,5 +24,5 @@ jobs:
 
       - name: Check current directory
         run: |
-          mvn -B package --file pom.xml
+          mvn clean package
           ls
