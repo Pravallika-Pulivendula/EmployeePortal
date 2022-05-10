@@ -23,6 +23,4 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
 
       - name: Check current directory
-        run: |
-          mvn clean package
-          ls
+        run: docker compose up
