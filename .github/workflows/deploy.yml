@@ -14,9 +14,10 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v3
 
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
+      - name: Configure SSH
+        uses: shimataro/ssh-key-action@v2
         with:
-          host: ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy with rsync
+        run: rsync -avz ./dist/ ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:/home/ubuntu/dist/
