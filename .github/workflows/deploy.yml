@@ -24,5 +24,6 @@ jobs:
 
       - name: Check current directory
         run: |
+          mvn spring-boot:run
           pwd
           ls target -a
