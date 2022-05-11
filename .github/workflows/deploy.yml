@@ -24,6 +24,6 @@ jobs:
 
       - name: Check current directory
         run: |
-          cat ./src/main/resources/application.properties
-          ls target -a
           docker compose up
+          sudo lsof -i tcp:9090
+          sudo lsof -i tcp:8080
