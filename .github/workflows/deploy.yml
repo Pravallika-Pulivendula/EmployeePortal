@@ -23,4 +23,6 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
 
       - name: Check current directory
-        run: docker compose up
+        run: |
+          pwd
+          ls target -a
