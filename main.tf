@@ -36,17 +36,6 @@ resource "aws_instance" "ssh-deploy" {
     timeout     = "4m"
     agent       = false
   }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get update",
-      "sudo apt-get install -y docker.io",
-      "sudo apt-get install -y docker-compose",
-      "sudo apt-get install git",
-      "sudo git clone https://github.com/Pravallika-Pulivendula/EmployeePortal.git",
-      "sudo docker-compose up -d",
-    ]
-  }
 }
 
 resource "aws_security_group" "ubuntu" {
