@@ -125,4 +125,6 @@ resource "aws_eip" "ubuntu" {
   instance = aws_instance.ssh-deploy.id
 }
 
-
+output "public_ip" {
+  value = aws_instance.ssh-deploy.public_ip
+}
