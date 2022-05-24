@@ -1,5 +1,21 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+  required_version = ">= 1.1.4"
+  cloud {
+    organization = "prod-deploy"
+    workspaces {
+      name = "deployment"
+    }
+  }
+}
+
 provider "aws" {
-  region     = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_instance" "ssh-deploy" {
@@ -18,25 +34,7 @@ resource "aws_instance" "ssh-deploy" {
     user        = "ubuntu"
     private_key = file("ssh-key")
     timeout     = "4m"
-    agent       = true
-  }
-
-  provisioner "file" {
-    source      = "docker-compose.yml"
-    destination = "/home/ubuntu/docker-compose.yml"
-  }
-
-  provisioner "file" {
-    content = self.public_ip
-    destination = "/home/ubuntu/.env"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get update",
-      "sudo apt-get install -y docker.io",
-      "sudo apt-get install -y docker-compose",
-    ]
+    agent       = false
   }
 }
 
@@ -127,4 +125,6 @@ resource "aws_eip" "ubuntu" {
   instance = aws_instance.ssh-deploy.id
 }
 
-
+output "public_ip" {
+  value = aws_instance.ssh-deploy.public_ip
+}
