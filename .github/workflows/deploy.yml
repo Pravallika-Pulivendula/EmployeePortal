@@ -24,6 +24,4 @@ jobs:
 
       - name: Check current directory
         run: |
-          sudo lsof -i tcp:9090
-          sudo lsof -i tcp:8080
           docker compose up
