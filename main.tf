@@ -3,7 +3,6 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.0"
-      region  = "us-east-1"
     }
   }
   required_version = ">= 1.1.4"
@@ -13,6 +12,10 @@ terraform {
       name = "deployment"
     }
   }
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 resource "aws_instance" "ssh-deploy" {
