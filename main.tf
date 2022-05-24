@@ -1,8 +1,11 @@
 provider "aws" {
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
   region     = "us-east-1"
-  access_key = "AKIAR5WCDNNTX3267G3R"
-  secret_key = "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"
 }
+
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
 
 resource "aws_instance" "ssh-deploy" {
   ami           = "ami-0c4f7023847b90238"
