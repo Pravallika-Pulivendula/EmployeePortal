@@ -92,4 +92,4 @@ jobs:
         export PUBLIC_IP=$(terraform output -raw public_ip)
         echo $PUBLIC_IP
         pwd
-        ansible-playbook -i inventory terraform.yaml
+        ansible-playbook -i inventory terraform.yaml --extra-vars "PUBLIC_IP=$PUBLIC_IP"
