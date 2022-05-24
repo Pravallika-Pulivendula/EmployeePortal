@@ -42,11 +42,6 @@ resource "aws_instance" "ssh-deploy" {
     destination = "/home/ubuntu/docker-compose.yml"
   }
 
-  provisioner "file" {
-    content = self.public_ip
-    destination = "/home/ubuntu/.env"
-  }
-
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
