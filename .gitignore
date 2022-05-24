@@ -1,4 +1,7 @@
 HELP.md
+ssh-key
+ssh-key.pub
+terraform.tfvars
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
