@@ -29,7 +29,7 @@ const AddEmployee = () => {
           console.log("employee added successfully", response.data);
         })
         .catch((error) => {
-          console.log("something went wroing", error);
+          console.log("something went wrong", error);
         });
     }
   };

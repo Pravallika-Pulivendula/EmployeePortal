@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
@@ -34,7 +32,7 @@ public class EmployeeController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee employee) {
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
         final Employee newEmployee = employeeService.addEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
     }

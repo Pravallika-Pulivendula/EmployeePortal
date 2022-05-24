@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -16,27 +15,24 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "employees")
+@Table(name = "employee")
 public class Employee {
     @Id
     @Column(name = "emp_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long empId;
 
-    @NotBlank(message = "Firstname should not be blank")
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank(message = "Lastname should not be blank")
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank(message = "Email should not be blank")
     @Email
-    @Column(name = "everest_email_id", nullable = false)
+    @Column(name = "everest_email_id")
     private String everestEmailId;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Email
