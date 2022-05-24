@@ -76,7 +76,7 @@ jobs:
       run: terraform init
       
     - name: Terraform Destroy
-      run: terraform destroy
+      run: terraform destroy -input=false
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Validate
