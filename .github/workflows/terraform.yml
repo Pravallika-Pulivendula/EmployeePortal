@@ -90,4 +90,5 @@ jobs:
       run: |
         terraform apply -auto-approve -input=false
         export PUBLIC_IP=$(terraform output -raw public_ip)
-        echo $PUBLIC_IP
+        cd ..
+        ansible-playbook -i inventory terraform.yaml
