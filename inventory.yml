@@ -1,4 +1,0 @@
-all:
-  hosts:
-    52.71.4.17:
-      ansible_user: ubuntu

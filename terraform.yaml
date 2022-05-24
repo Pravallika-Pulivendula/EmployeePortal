@@ -1,21 +1,19 @@
 - hosts: all
-  become: true
+  become: yes
   become_user: root
-  gather_facts: true
+  become_method: sudo
   tasks:
     - name: Install git
       apt:
         name: git
         state: present
         update_cache: yes
-
     - name: Clone git repo
       git:
         repo: 'https://github.com/Pravallika-Pulivendula/EmployeePortal.git'
-        dest: /home/ubuntu/
+        dest: /home/ubuntu/EmployeePortal
         clone: yes
         update: yes
-
     - name: Add Docker GPG apt Key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
@@ -32,9 +30,5 @@
         state: latest
         update_cache: true
 
-    - name: Install Docker Module for Python
-      pip:
-        name: docker
-
     - name: Run docker
-      command: chdir=/home/ubuntu/EmployeePortal sudo docker-compose up -d
+      command: chdir=/home/ubuntu/EmployeePortal docker compose up -d
