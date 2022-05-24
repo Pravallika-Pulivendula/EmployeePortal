@@ -1,11 +1,8 @@
 provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  access_key = AWS_ACCESS_KEY
+  secret_key = AWS_SECRET_KEY
   region     = "us-east-1"
 }
-
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
 
 resource "aws_instance" "ssh-deploy" {
   ami           = "ami-0c4f7023847b90238"
@@ -29,6 +26,11 @@ resource "aws_instance" "ssh-deploy" {
   provisioner "file" {
     source      = "docker-compose.yml"
     destination = "/home/ubuntu/docker-compose.yml"
+  }
+
+  provisioner "file" {
+    content = self.public_ip
+    destination = "/home/ubuntu/.env"
   }
 
   provisioner "remote-exec" {
@@ -127,8 +129,4 @@ resource "aws_eip" "ubuntu" {
   instance = aws_instance.ssh-deploy.id
 }
 
-resource "local_file" "public_ip" {
-  content = aws_instance.ssh-deploy.public_ip
-  filename = ".env"
-}
 
