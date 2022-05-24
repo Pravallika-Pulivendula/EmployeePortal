@@ -37,16 +37,14 @@ resource "aws_instance" "ssh-deploy" {
     agent       = true
   }
 
-  provisioner "file" {
-    source      = "docker-compose.yml"
-    destination = "/home/ubuntu/docker-compose.yml"
-  }
-
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
       "sudo apt-get install -y docker.io",
       "sudo apt-get install -y docker-compose",
+      "sudo apt-get install git",
+      "sudo git clone https://github.com/Pravallika-Pulivendula/EmployeePortal.git",
+      "sudo docker-compose up -d",
     ]
   }
 }
