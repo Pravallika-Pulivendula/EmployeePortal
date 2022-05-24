@@ -34,7 +34,7 @@ resource "aws_instance" "ssh-deploy" {
     user        = "ubuntu"
     private_key = file("ssh-key")
     timeout     = "4m"
-    agent       = true
+    agent       = false
   }
 
   provisioner "remote-exec" {
