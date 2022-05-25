@@ -47,4 +47,4 @@
         mode: 'u+x,g+x'
 
     - name: Run docker
-      command: chdir=/home/ubuntu/EmployeePortal sudo docker-compose up -d
+      command: chdir=/home/ubuntu/EmployeePortal sudo docker-compose up -d REACT_APP_API_BASE_URL='http://{{ PUBLIC_IP }}:8080'
