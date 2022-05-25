@@ -93,4 +93,4 @@ jobs:
         echo $PUBLIC_IP
         pwd
         sudo chmod 400 ssh-key.pem
-        ansible-playbook -i inventory terraform.yaml --extra-vars "PUBLIC_IP=$PUBLIC_IP "
+        ansible-playbook -i inventory terraform.yaml --extra-vars PUBLIC_IP=$PUBLIC_IP
