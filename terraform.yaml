@@ -31,4 +31,4 @@
         update_cache: true
 
     - name: Run docker
-      command: chdir=/home/ubuntu/EmployeePortal docker compose up -d
+      command: chdir=/home/ubuntu/EmployeePortal sudo docker-compose up -d
