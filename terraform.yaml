@@ -29,6 +29,22 @@
         name: docker-ce
         state: latest
         update_cache: true
+        
+    - name: Add "ansible_ubuntu_demo" user to "docker" group
+      remote_user: ubuntu
+      user:
+        name: "ubuntu"
+        group: "docker"
+        append: yes
+      tags:
+        - docker
+
+    - name: Install docker-compose from official github repo
+      remote_user: ansible_ubuntu_demo
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
 
     - name: Run docker
       command: chdir=/home/ubuntu/EmployeePortal sudo docker-compose up -d
