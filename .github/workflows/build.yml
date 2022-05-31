@@ -3,7 +3,7 @@ on:
   push:
     branches: [ master ]
 jobs:
-  container-job:
+  Spring:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -29,7 +29,12 @@ jobs:
       - name: Test with Maven
         run: mvn -B test --file pom.xml
         
+  React:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
+      - name: Change directory
+        run: cd src/main/java/com/example/employeePortal/employee-portal-react
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
