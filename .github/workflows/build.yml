@@ -41,6 +41,7 @@ jobs:
         with:
           node-version: "14"
           cache: "npm"
+          cache-dependency-path: src/main/java/com/example/employeePortal/employee-portal-react/package-lock.json
 
       - name: Run npm install
         run: |
